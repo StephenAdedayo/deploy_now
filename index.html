@@ -235,18 +235,20 @@
         status.textContent = 'Sending your RSVP…';
 
         try {
-          const response = await fetch(`https://formsubmit.co/ajax/${RSVP_EMAIL}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify({
-              name,
-              attendance,
-              message: rsvpText,
-              _subject: `Birthday RSVP from ${name}`,
-              _template: 'table',
-              _captcha: 'false'
-            })
-          });
+          const response = await fetch('https://api.web3forms.com/submit', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  body: JSON.stringify({
+    access_key: '6083c016-bb9e-476b-bbda-bf4bfc760b3c',
+    name,
+    attendance,
+    message: rsvpText,
+    subject: `Birthday RSVP from ${name}`
+  })
+});
           const result = await response.json();
           if (!response.ok || String(result.success) !== 'true') throw new Error('Send failed');
 
